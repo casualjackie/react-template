@@ -1,0 +1,12 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.logo {
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+
+  background-image: url("../assets/webpack-logo.png");
+  background-size: cover;
+}
