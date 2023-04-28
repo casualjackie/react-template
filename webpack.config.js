@@ -21,11 +21,11 @@ const optimization = () => {
 
   return config;
 };
-
+// TODO: 1:59:50 time
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
-  entry: "./index.js",
+  entry: ["@babel/polyfill", "./index.jsx"],
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
@@ -42,11 +42,12 @@ module.exports = {
     },
   },
   optimization: optimization(),
+  devtool: isDev ? "source-map" : undefined,
   plugins: [
     new HtmlWebpackPlugin({
       template: "./index.html",
       minify: {
-        collapseWhitespace: isProd, // mb not needed in w5
+        collapseWhitespace: isProd, // TODO: mb not needed in w5
       },
     }),
     new CopyPlugin({
@@ -76,6 +77,36 @@ module.exports = {
       {
         test: /\.(png|jpg|gif|ttf|woff|woff2|eot)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.js$/i,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+      {
+        test: /\.(ts)$/i,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-typescript"],
+          },
+        },
+      },
+      {
+        test: /\.(jsx)$/i,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
     ],
   },
