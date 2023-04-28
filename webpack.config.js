@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
@@ -39,6 +40,34 @@ const jsLoaders = () => {
   return loaders;
 };
 
+const plugins = () => {
+  const base = [
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      minify: {
+        collapseWhitespace: isProd, // TODO: mb not needed in w5
+      },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/favicon.ico"),
+          to: path.resolve(__dirname, "dist"),
+        },
+      ],
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+  ];
+
+  if (isProd) {
+    base.push(new BundleAnalyzerPlugin());
+  }
+
+  return base;
+};
+
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
@@ -60,25 +89,7 @@ module.exports = {
   },
   optimization: optimization(),
   devtool: isDev ? "source-map" : undefined,
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-      minify: {
-        collapseWhitespace: isProd, // TODO: mb not needed in w5
-      },
-    }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src/favicon.ico"),
-          to: path.resolve(__dirname, "dist"),
-        },
-      ],
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-    }),
-  ],
+  plugins: plugins(),
   module: {
     rules: [
       {
