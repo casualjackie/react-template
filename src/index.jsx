@@ -7,7 +7,3 @@ import "./styles/fonts";
 const domNode = document.getElementById("root");
 const root = createRoot(domNode);
 root.render(<App />);
-
-// TODO: pay attention
-// favicon
-// hmr

@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
@@ -65,12 +66,16 @@ const plugins = () => {
     base.push(new BundleAnalyzerPlugin());
   }
 
+  if (isDev) {
+    base.push(new ReactRefreshWebpackPlugin());
+  }
+
   return base;
 };
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
-  mode: "development",
+  mode: isDev ? "development" : "production",
   entry: ["@babel/polyfill", "./index.jsx"],
   output: {
     filename: "[name].[contenthash].js",
