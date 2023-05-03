@@ -76,7 +76,7 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: isDev ? "development" : "production",
-  entry: ["@babel/polyfill", "./index.jsx"],
+  entry: ["@babel/polyfill", "./index.tsx"],
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
@@ -133,11 +133,34 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: [
-              ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
-            ],
           },
         },
+      },
+      {
+        test: /\.(js|ts|tsx)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: [
+                "@babel/preset-env",
+                "@babel/preset-react",
+                "@babel/preset-typescript",
+              ],
+              plugins: [
+                [
+                  "@babel/plugin-transform-runtime",
+                  {
+                    regenerator: true,
+                  },
+                ],
+                isDev && require.resolve("react-refresh/babel"), // TODO: require.resolve
+              ].filter(Boolean),
+            },
+          },
+          isDev && "eslint-loader",
+        ].filter(Boolean),
       },
     ],
   },
