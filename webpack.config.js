@@ -76,7 +76,7 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: isDev ? "development" : "production",
-  entry: ["@babel/polyfill", "./index.tsx"],
+  entry: "./index.tsx",
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
