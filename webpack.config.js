@@ -10,6 +10,7 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
 
+// TODO: use .filter(Boolean)
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -22,23 +23,6 @@ const optimization = () => {
   }
 
   return config;
-};
-
-const jsLoaders = () => {
-  const loaders = [
-    {
-      loader: "babel-loader",
-      options: {
-        presets: ["@babel/preset-env"],
-      },
-    },
-  ];
-
-  if (isDev) {
-    loaders.push("eslint-loader");
-  }
-
-  return loaders;
 };
 
 const plugins = () => {
@@ -130,6 +114,7 @@ module.exports = {
                     regenerator: true,
                   },
                 ],
+                ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
                 isDev && require.resolve("react-refresh/babel"), // TODO: require.resolve
               ].filter(Boolean),
             },
