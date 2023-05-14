@@ -10,7 +10,6 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
 
-// TODO: use .filter(Boolean)
 const optimization = () => {
   const config = {
     splitChunks: {
@@ -23,38 +22,6 @@ const optimization = () => {
   }
 
   return config;
-};
-
-const plugins = () => {
-  const base = [
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-      minify: {
-        collapseWhitespace: isProd, // TODO: mb not needed in w5
-      },
-    }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src/favicon.ico"),
-          to: path.resolve(__dirname, "dist"),
-        },
-      ],
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].[contenthash].css",
-    }),
-  ];
-
-  if (isProd) {
-    base.push(new BundleAnalyzerPlugin());
-  }
-
-  if (isDev) {
-    base.push(new ReactRefreshWebpackPlugin());
-  }
-
-  return base;
 };
 
 module.exports = {
@@ -78,7 +45,27 @@ module.exports = {
   },
   optimization: optimization(),
   devtool: isDev ? "source-map" : undefined,
-  plugins: plugins(),
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      minify: {
+        collapseWhitespace: isProd,
+      },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/favicon.ico"),
+          to: path.resolve(__dirname, "dist"),
+        },
+      ],
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+    isProd && new BundleAnalyzerPlugin(),
+    isDev && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
   module: {
     rules: [
       {
@@ -115,7 +102,7 @@ module.exports = {
                   },
                 ],
                 ["@babel/plugin-transform-react-jsx", { runtime: "automatic" }],
-                isDev && require.resolve("react-refresh/babel"), // TODO: require.resolve
+                isDev && require.resolve("react-refresh/babel"),
               ].filter(Boolean),
             },
           },
