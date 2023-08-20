@@ -1,6 +1,6 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: [push, pull_request]
 jobs:
   init:
     runs-on: ubuntu-latest
@@ -17,4 +17,3 @@ jobs:
         run: npm install
       - name: build project
         run: npm run build
-      
