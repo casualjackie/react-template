@@ -5,13 +5,23 @@
     "node": true
   },
   "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "ecmaVersion": 6,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "modules": true
     }
   },
   "plugins": ["react"],
-  "parser": "babel-eslint",
   "extends": ["eslint:recommended"],
+  "overrides": [
+    {
+      "files": ["*.d.ts"],
+      "parser": "@typescript-eslint/parser",
+      "extends": ["plugin:@typescript-eslint/recommended"]
+    }
+  ],
   "rules": {
     "no-unused-vars": "warn",
     "react/jsx-uses-vars": "error"
