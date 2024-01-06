@@ -8,6 +8,7 @@
     "build": "cross-env NODE_ENV=production npx webpack --mode production",
     "dev": "cross-env NODE_ENV=development npx webpack --mode development",
     "start": "cross-env NODE_ENV=development npx webpack-dev-server --mode development",
+    "start-open": "npm run start -- --open",
     "stats": "npx webpack --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "keywords": [],
