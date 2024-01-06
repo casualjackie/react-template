@@ -1,10 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const isDev = process.env.NODE_ENV === "development";
@@ -30,12 +29,14 @@ module.exports = {
   entry: "./index.tsx",
   output: {
     filename: "[name].[contenthash].js",
+    assetModuleFilename: "assets/[hash][ext]",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
   devServer: {
-    port: 4000,
+    port: 3000,
     hot: isDev,
+    open: false,
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css"],
@@ -52,22 +53,18 @@ module.exports = {
         collapseWhitespace: isProd,
       },
     }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, "src/favicon.ico"),
-          to: path.resolve(__dirname, "dist"),
-        },
-      ],
-    }),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
     }),
-    isProd && new BundleAnalyzerPlugin(),
+    // isProd && new BundleAnalyzerPlugin(),
     isDev && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
       {
         test: /\.css$/i,
         use: [
@@ -75,11 +72,12 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
             options: {},
           },
+          "style-loader",
           "css-loader",
         ],
       },
       {
-        test: /\.(png|jpg|gif|ttf|woff|woff2|eot)$/i,
+        test: /\.(png|jpg|jpeg|webp|gif|ttf|woff|woff2|eot)$/i,
         type: "asset/resource",
       },
       {
