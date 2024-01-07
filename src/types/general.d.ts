@@ -8,3 +8,8 @@ declare module "*.ttf";
 declare module "*.woff";
 declare module "*.woff2";
 declare module "*.eot";
+
+declare module "*.module.css" {
+  const styles: { [key: string]: string };
+  export default styles;
+}
