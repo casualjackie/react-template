@@ -3,8 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
+const webpack = require("webpack");
 
 const isDev = process.env.NODE_ENV === "development";
 const isProd = !isDev;
@@ -42,6 +43,9 @@ module.exports = {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".css"],
     alias: {
       "@assets": path.resolve(__dirname, "src/assets"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@styles": path.resolve(__dirname, "src/styles"),
+      "@types": path.resolve(__dirname, "src/types"),
     },
   },
   optimization: optimization(),
@@ -56,8 +60,11 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].css",
     }),
-    // isProd && new BundleAnalyzerPlugin(),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+    }),
     isDev && new ReactRefreshWebpackPlugin(),
+    isDev && new ESLintPlugin(),
   ].filter(Boolean),
   module: {
     rules: [
@@ -68,11 +75,7 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {},
-          },
-          "style-loader",
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
         ],
       },
@@ -88,7 +91,7 @@ module.exports = {
             loader: "babel-loader",
             options: {
               presets: [
-                "@babel/preset-env",
+                ["@babel/preset-env", { useBuiltIns: "usage", corejs: 3 }],
                 "@babel/preset-react",
                 "@babel/preset-typescript",
               ],
@@ -104,7 +107,6 @@ module.exports = {
               ].filter(Boolean),
             },
           },
-          isDev && "eslint-loader",
         ].filter(Boolean),
       },
     ],

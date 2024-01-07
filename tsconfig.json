@@ -17,11 +17,14 @@
     "strict": true,
     "sourceMap": true,
     "baseUrl": "./src",
-    "typeRoots": ["./src/types"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "paths": {
-      "@assets/*": ["assets/*"]
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@styles/*": ["styles/*"],
+      "@types/*": ["types/*"]
     }
   },
-  "include": ["node_modules/@types", "src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
