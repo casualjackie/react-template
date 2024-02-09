@@ -1,0 +1,24 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-roboto);
+}
+
+html {
+  --font-roboto: "Roboto", sans-serif;
+}
+
+html[data-theme="light"] {
+  --color-background: #F0F4FC;
+}
+
+html[data-theme="dark"] {
+  --color-background: #272727;
+}
+
+body {
+  background-color: var(--color-background);
+}
