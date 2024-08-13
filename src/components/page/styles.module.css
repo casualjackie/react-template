@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  flex-direction: column;
+
+  margin: 12px auto;
+
+
+  min-height: 100vh;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+}

@@ -19,11 +19,7 @@
     "baseUrl": "./src",
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@styles/*": ["styles/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"]
+      "@/*": ["*"],
     }
   },
   "include": ["src/**/*"],

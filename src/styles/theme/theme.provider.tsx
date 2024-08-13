@@ -1,4 +1,4 @@
-import React, {
+import {
   useState,
   useEffect,
   useLayoutEffect,
@@ -8,7 +8,7 @@ import React, {
   useMemo,
 } from "react";
 import { Helmet } from "react-helmet-async";
-import { getLocalStorageItem, setLocalStorageItem } from "@utils/localStorage";
+import { getLocalStorageItem, setLocalStorageItem } from "@/utils/localStorage";
 import { LIGHT_THEME, DARK_THEME } from "./theme.constants";
 import type {
   ThemeColor,

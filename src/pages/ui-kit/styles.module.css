@@ -1,0 +1,14 @@
+.galleryCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: inherit;
+  height: 70px;
+}
+
+.themeButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 4px;
+}

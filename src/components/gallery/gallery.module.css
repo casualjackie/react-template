@@ -1,0 +1,12 @@
+.gallery {
+  display: flex;
+  width: 500px;
+
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.galleryCard {
+  width: inherit;
+  scroll-snap-align: center;
+}
