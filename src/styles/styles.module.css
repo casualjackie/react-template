@@ -12,11 +12,33 @@ html {
 }
 
 html[data-theme="light"] {
-  --color-background: #F0F4FC;
+  --color-background: #f0f4fc;
+  --color-primary-text: #272727;
+
+  --color-primary-900: #9064b0;
+  --color-primary-800: #a271c6;
+  --color-primary-700: #b57edc;
+  --color-primary-600: #bc8adf;
+  --color-primary-500: #b57edc;
+  --color-primary-400: #c397e3;
+  --color-primary-300: #cba4e6;
+  --color-primary-200: #d2b1ea;
+  --color-primary-100: #dabeed;
 }
 
 html[data-theme="dark"] {
   --color-background: #272727;
+  --color-primary-text: #ffffff;
+
+  --color-primary-900: #9064b0;
+  --color-primary-800: #a271c6;
+  --color-primary-700: #b57edc;
+  --color-primary-600: #bc8adf;
+  --color-primary-500: #b57edc;
+  --color-primary-400: #c397e3;
+  --color-primary-300: #cba4e6;
+  --color-primary-200: #d2b1ea;
+  --color-primary-100: #dabeed;
 }
 
 body {

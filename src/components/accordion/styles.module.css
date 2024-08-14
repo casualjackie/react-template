@@ -1,0 +1,56 @@
+.accordion {
+  border: 0.3rem solid var(--color-primary-600);
+  border-radius: 0.5rem;
+}
+
+.details {
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+
+  color: var(--color-primary-text);
+
+  list-style: none;
+  cursor: pointer;
+
+  transition: background-color 250ms ease-in-out;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:hover {
+  background-color: var(--color-primary-100);
+}
+
+.summary::before {
+  content: "►";
+
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+
+  transition: rotate 250ms ease-out;
+}
+
+.details[open] .summary::before {
+  rotate: 90deg;
+}
+
+.content {
+  padding: 0 0.5rem;
+  max-height: 0;
+
+  color: var(--color-primary-text);
+
+  overflow: hidden;
+  transition: max-height 350ms linear;
+}
+
+.details[open] + .content {
+  max-height: 400px; /* Set a max-height value enough to show all the content */
+}
