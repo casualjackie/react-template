@@ -49,7 +49,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./index.html",
-      favicon: "./favicon.ico", 
+      favicon: "./favicon.ico",
       minify: {
         collapseWhitespace: isProd,
       },
@@ -73,7 +73,15 @@ module.exports = {
         test: /\.css$/i,
         use: [
           isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-          "css-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                namedExport: false,
+                exportLocalsConvention: "as-is",
+              },
+            },
+          },
         ],
       },
       {
