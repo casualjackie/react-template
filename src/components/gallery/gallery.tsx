@@ -5,6 +5,9 @@ type GalleryProps = {
   width: string;
 };
 
+/**
+ * Gallery that will automatically complete the scroll, so that the displayed component is always shown in full.
+ */
 export const Gallery = ({ children, width }: GalleryProps) => {
   return (
     <div className={styles.gallery} style={{ width }}>

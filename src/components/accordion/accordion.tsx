@@ -10,6 +10,13 @@ type AccordionProps = {
   groupName?: string;
 };
 
+/**
+ * @param open Use only as initial value. You can't control component with this param all the time.
+ * @param groupName Use the same names if you want to group components. Components assembled in a group will keep only one component open at a time.
+ * 
+ * Example of the work of accordion on pure css.
+ * But may lack control over component, check out description of params before starting work.
+ */
 export const Accordion = ({
   open,
   onToggle,
